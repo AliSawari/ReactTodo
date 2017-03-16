@@ -5,15 +5,16 @@ class TodoList extends Component {
     super(props);
   }
 
+  renderTodo(){
+    var {todos} = this.props;
+    return todos.map((todo)=>{
+      return <Todo key={todo.id} {...todo} />;
+    });
+  }
+
   render(){
-    var renderTodo = () => {
-      var {todos} = this.props;
-      return todos.map((todo)=>{
-        return <Todo key={todo.id} {...todo} />;
-      });
-    }
     return <div>
-      {renderTodo()}
+      {this.renderTodo()}
     </div>
   }
 }

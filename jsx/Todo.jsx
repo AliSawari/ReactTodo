@@ -7,11 +7,9 @@ class Todo extends Component {
   render(){
     var {text,id} = this.props;
     return (
-      <div className="container">
       <h3 className="well text-center">
       {id}. {text}
     </h3>
-    </div>
     );
   }
 }
