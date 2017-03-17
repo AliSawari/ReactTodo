@@ -11,9 +11,11 @@ class AddTodo extends Component {
     if(todoText.length > 1) {
       this.refs.todoText.value = '';
       this.props.add(todoText);
-      this.refs.todoText.placeholder = 'Your Todo Here...'
+      this.refs.todoText.placeholder = 'Your Todo Here...';
+      this.refs.todoText.style.borderColor = '#1b86e9';
     } else {
       this.refs.todoText.placeholder = 'Enter Valid Data!';
+      this.refs.todoText.style.borderColor = 'red';
       this.refs.todoText.focus();
     }
   }

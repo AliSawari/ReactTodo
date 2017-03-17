@@ -13,7 +13,8 @@ class TodoSearch extends Component {
 
   render(){
     return (
-      <div className="jumbotron">
+      <div>
+        <h3>Search Todos</h3>
         <div>
           <input type="search" ref="searchText" className="form-control center-block"
             placeholder="Search Todos" onChange={this.change.bind(this)}/>
