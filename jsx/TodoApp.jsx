@@ -9,20 +9,26 @@ class TodoApp extends Component {
       todos: [
         {
           id:1,
-          text:"Eat Something"
+          text:"Eat Something",
+          done:false
         },
         {
           id:2,
-          text:"Wake Up at 8 am"
+          text:"Wake Up at 8 am",
+          done:true
         },
         {
           id:3,
-          text:"Call Jalil"
+          text:"Call Jalil",
+          done:true
         }
       ],
       showCompl:false,
       searchText:''
     }
+      this.seacrh = this.seacrh.bind(this);
+      this.toggle = this.toggle.bind(this);
+      this.AddTodo = this.AddTodo.bind(this);
   }
 
   AddTodo(todoText) {
@@ -39,7 +45,8 @@ class TodoApp extends Component {
       ...this.state.todos,
       {
         id: count,
-        text: todoText
+        text: todoText,
+        done:false
       }
     ]
   });
@@ -61,13 +68,25 @@ class TodoApp extends Component {
       }
   }
 
+  toggle(id) {
+    var newTodos = this.state.todos.map((todo)=>{
+      if(todo.id === id){
+        todo.done = !todo.done;
+      }
+      return todo;
+    });
+    this.setState({
+      todos: newTodos
+    })
+  }
+
   render(){
     var {todos} = this.state;
     return (
       <div className="container jumbotron" style={this.mainStyle()}>
-        <TodoSearch seacrh={this.seacrh.bind(this)}/>
-      <TodoList todos={todos}/>
-      <AddTodo add={this.AddTodo.bind(this)}/>
+        <TodoSearch seacrh={this.seacrh}/>
+        <TodoList todos={todos} toggle={this.toggle}/>
+        <AddTodo add={this.AddTodo}/>
       </div>
     );
   }

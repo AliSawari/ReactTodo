@@ -23,7 +23,7 @@ class AddTodo extends Component {
   render(){
     return (
     <form onSubmit={this.add.bind(this)}>
-      <input type="text" ref="todoText"
+      <input style={{fontSize:'18px'}} type="text" ref="todoText"
         className="form-control center-block" placeholder="Your Todo Here..."/>
       <button className="btn btn-lg btn-success center-block"
         style={{marginTop:'20px'}}>Add Todo</button>

@@ -9583,17 +9583,23 @@ var TodoApp = function (_Component) {
     _this.state = {
       todos: [{
         id: 1,
-        text: "Eat Something"
+        text: "Eat Something",
+        done: false
       }, {
         id: 2,
-        text: "Wake Up at 8 am"
+        text: "Wake Up at 8 am",
+        done: true
       }, {
         id: 3,
-        text: "Call Jalil"
+        text: "Call Jalil",
+        done: true
       }],
       showCompl: false,
       searchText: ''
     };
+    _this.seacrh = _this.seacrh.bind(_this);
+    _this.toggle = _this.toggle.bind(_this);
+    _this.AddTodo = _this.AddTodo.bind(_this);
     return _this;
   }
 
@@ -9612,7 +9618,8 @@ var TodoApp = function (_Component) {
       this.setState({
         todos: [].concat(_toConsumableArray(this.state.todos), [{
           id: count,
-          text: todoText
+          text: todoText,
+          done: false
         }])
       });
     }
@@ -9635,6 +9642,19 @@ var TodoApp = function (_Component) {
       };
     }
   }, {
+    key: 'toggle',
+    value: function toggle(id) {
+      var newTodos = this.state.todos.map(function (todo) {
+        if (todo.id === id) {
+          todo.done = !todo.done;
+        }
+        return todo;
+      });
+      this.setState({
+        todos: newTodos
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var todos = this.state.todos;
@@ -9642,9 +9662,9 @@ var TodoApp = function (_Component) {
       return _react2.default.createElement(
         'div',
         { className: 'container jumbotron', style: this.mainStyle() },
-        _react2.default.createElement(_TodoSearch2.default, { seacrh: this.seacrh.bind(this) }),
-        _react2.default.createElement(_TodoList2.default, { todos: todos }),
-        _react2.default.createElement(_AddTodo2.default, { add: this.AddTodo.bind(this) })
+        _react2.default.createElement(_TodoSearch2.default, { seacrh: this.seacrh }),
+        _react2.default.createElement(_TodoList2.default, { todos: todos, toggle: this.toggle }),
+        _react2.default.createElement(_AddTodo2.default, { add: this.AddTodo })
       );
     }
   }]);
@@ -9720,7 +9740,7 @@ var AddTodo = function (_Component) {
       return _react2.default.createElement(
         'form',
         { onSubmit: this.add.bind(this) },
-        _react2.default.createElement('input', { type: 'text', ref: 'todoText',
+        _react2.default.createElement('input', { style: { fontSize: '18px' }, type: 'text', ref: 'todoText',
           className: 'form-control center-block', placeholder: 'Your Todo Here...' }),
         _react2.default.createElement(
           'button',
@@ -9768,19 +9788,109 @@ var Todo = function (_Component) {
   function Todo(props) {
     _classCallCheck(this, Todo);
 
-    return _possibleConstructorReturn(this, (Todo.__proto__ || Object.getPrototypeOf(Todo)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Todo.__proto__ || Object.getPrototypeOf(Todo)).call(this, props));
+
+    _this.state = {
+      hover: false,
+      click: 0
+    };
+    _this.mainStyle = _this.mainStyle.bind(_this);
+    _this.toggle = _this.toggle.bind(_this);
+    _this.hoverIn = _this.hoverIn.bind(_this);
+    _this.hoverOut = _this.hoverOut.bind(_this);
+    return _this;
   }
 
   _createClass(Todo, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var done = this.props.done;
+
+      if (done) {
+        this.setState({ click: 1 });
+      }
+    }
+  }, {
+    key: 'hoverIn',
+    value: function hoverIn() {
+      this.setState({
+        hover: true
+      });
+    }
+  }, {
+    key: 'hoverOut',
+    value: function hoverOut() {
+      this.setState({
+        hover: false
+      });
+    }
+  }, {
+    key: 'toggle',
+    value: function toggle() {
+      var _props = this.props,
+          id = _props.id,
+          toggle = _props.toggle,
+          text = _props.text,
+          done = _props.done;
+      var click = this.state.click;
+
+      var nClick = ++click;
+      this.setState({
+        click: nClick
+      });
+      if (nClick === 2) {
+        this.setState({ click: 0 });
+      }
+      toggle(id);
+    }
+  }, {
+    key: 'mainStyle',
+    value: function mainStyle() {
+      var _state = this.state,
+          hover = _state.hover,
+          click = _state.click;
+
+      if (hover) {
+        return {
+          backgroundColor: '#dbbe40',
+          cursor: 'pointer',
+          borderRadius: '15px',
+          transition: '0.3s'
+        };
+      } else if (click === 1) {
+        return {
+          border: '1px solid #49eb54',
+          backgroundColor: '#b3b3b3',
+          color: '#5d5d5d',
+          textDecoration: 'line-through',
+          borderRadius: '15px',
+          cursor: 'pointer'
+        };
+      } else {
+        return {
+          backgroundColor: '#e3cf78',
+          cursor: 'pointer',
+          borderRadius: '15px',
+          transition: '0.3s'
+        };
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _props = this.props,
-          text = _props.text,
-          id = _props.id;
+      var _props2 = this.props,
+          text = _props2.text,
+          id = _props2.id,
+          done = _props2.done;
 
       return _react2.default.createElement(
-        'h3',
-        { className: 'well text-center', style: { backgroundColor: '#e3cf78' } },
+        'h4',
+        { onMouseEnter: this.hoverIn, onMouseLeave: this.hoverOut, onClick: this.toggle,
+          className: 'well text-center',
+          style: this.mainStyle() },
+        _react2.default.createElement('input', { type: 'checkbox', checked: done, onChange: function onChange() {
+            return 0;
+          } }),
         id,
         '. ',
         text
@@ -9836,10 +9946,12 @@ var TodoList = function (_Component) {
   _createClass(TodoList, [{
     key: 'renderTodo',
     value: function renderTodo() {
-      var todos = this.props.todos;
+      var _props = this.props,
+          todos = _props.todos,
+          toggle = _props.toggle;
 
       return todos.map(function (todo) {
-        return _react2.default.createElement(_Todo2.default, _extends({ key: todo.id }, todo));
+        return _react2.default.createElement(_Todo2.default, _extends({ key: todo.id }, todo, { toggle: toggle }));
       });
     }
   }, {
@@ -9906,7 +10018,7 @@ var TodoSearch = function (_Component) {
         "div",
         null,
         _react2.default.createElement(
-          "h3",
+          "h2",
           null,
           "Search Todos"
         ),
@@ -22188,6 +22300,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var app = document.getElementById('app');
 _reactDom2.default.render(_react2.default.createElement(_TodoApp2.default, null), app);
+app.style.fontFamily = "Roboto";
+app.style.fontWeight = 'bold';
 
 /***/ })
 /******/ ]);

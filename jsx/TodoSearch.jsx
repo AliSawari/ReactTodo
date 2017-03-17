@@ -14,7 +14,7 @@ class TodoSearch extends Component {
   render(){
     return (
       <div>
-        <h3>Search Todos</h3>
+        <h2>Search Todos</h2>
         <div>
           <input type="search" ref="searchText" className="form-control center-block"
             placeholder="Search Todos" onChange={this.change.bind(this)}/>
