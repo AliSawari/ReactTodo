@@ -9859,7 +9859,7 @@ var Todo = function (_Component) {
         };
       } else if (click === 1) {
         return {
-          border: '1px solid #49eb54',
+          border: '2px solid #49eb54',
           backgroundColor: '#b3b3b3',
           color: '#5d5d5d',
           textDecoration: 'line-through',
