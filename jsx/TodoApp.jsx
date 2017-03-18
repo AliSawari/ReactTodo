@@ -2,33 +2,23 @@ import React,{Component} from 'react';
 import TodoList from './TodoList';
 import AddTodo from './AddTodo';
 import TodoSearch from './TodoSearch';
+import TodoStorage from './TodoStorage';
 class TodoApp extends Component {
   constructor(props){
     super(props);
     this.state = {
-      todos: [
-        {
-          id:1,
-          text:"Eat Something",
-          done:false
-        },
-        {
-          id:2,
-          text:"Wake Up at 8 am",
-          done:true
-        },
-        {
-          id:3,
-          text:"Call Jalil",
-          done:true
-        }
-      ],
+      todos: TodoStorage.get(),
       showCompl:false,
       searchText:''
     }
       this.seacrh = this.seacrh.bind(this);
       this.toggle = this.toggle.bind(this);
       this.AddTodo = this.AddTodo.bind(this);
+  }
+
+  componentDidUpdate(){
+    var {todos} = this.state;
+    TodoStorage.save(todos);
   }
 
   AddTodo(todoText) {
@@ -86,7 +76,7 @@ class TodoApp extends Component {
       <div className="container jumbotron" style={this.mainStyle()}>
         <TodoSearch seacrh={this.seacrh}/>
         <TodoList todos={todos} toggle={this.toggle}/>
-        <AddTodo add={this.AddTodo}/>
+        <AddTodo add={this.AddTodo} />
       </div>
     );
   }

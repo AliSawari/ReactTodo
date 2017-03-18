@@ -25,5 +25,8 @@
     "socket.io": "^1.7.3",
     "webpack": "^2.2.1",
     "nodemon": "latest"
+  },
+  "devDependencies": {
+    "compression-webpack-plugin": "^0.3.2"
   }
 }

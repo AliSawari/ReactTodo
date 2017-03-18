@@ -2,7 +2,8 @@ import React,{Component} from 'react';
 
 class AddTodo extends Component {
   constructor(props){
-    super(props)
+    super(props);
+    this.add = this.add.bind(this);
   }
 
   add(e){
@@ -22,7 +23,7 @@ class AddTodo extends Component {
 
   render(){
     return (
-    <form onSubmit={this.add.bind(this)}>
+    <form onSubmit={this.add}>
       <input style={{fontSize:'18px'}} type="text" ref="todoText"
         className="form-control center-block" placeholder="Your Todo Here..."/>
       <button className="btn btn-lg btn-success center-block"
