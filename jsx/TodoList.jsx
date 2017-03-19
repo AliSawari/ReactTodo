@@ -6,7 +6,7 @@ class TodoList extends Component {
   }
 
   renderTodo(){
-    var {todos,toggle} = this.props;
+    var {todos,toggle,del} = this.props;
     return todos.map((todo)=>{
       return <Todo key={todo.id} {...todo} toggle={toggle}/>;
     });

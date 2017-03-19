@@ -44,7 +44,7 @@ class TodoApp extends Component {
 
   seacrh(searchText,check){
     this.setState({
-      searchText:searchText,
+      searchText:searchText.toLowerCase(),
       showCompl:check
     });
   }
@@ -70,12 +70,14 @@ class TodoApp extends Component {
     })
   }
 
+
   render(){
-    var {todos} = this.state;
+    var {todos,showCompl,searchText} = this.state;
+    var filter = TodoStorage.filter(todos,showCompl,searchText);
     return (
       <div className="container jumbotron" style={this.mainStyle()}>
         <TodoSearch seacrh={this.seacrh}/>
-        <TodoList todos={todos} toggle={this.toggle}/>
+        <TodoList todos={filter} toggle={this.toggle}/>
         <AddTodo add={this.AddTodo} />
       </div>
     );

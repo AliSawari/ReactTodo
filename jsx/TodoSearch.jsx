@@ -3,6 +3,7 @@ import React,{Component} from 'react';
 class TodoSearch extends Component {
   constructor(props){
     super(props);
+    this.change = this.change.bind(this);
   }
 
   change(){
@@ -17,13 +18,15 @@ class TodoSearch extends Component {
         <h2>Search Todos</h2>
         <div>
           <input type="search" ref="searchText" className="form-control center-block"
-            placeholder="Search Todos" onChange={this.change.bind(this)}/>
+            placeholder="Search Todos" onChange={this.change}/>
         </div>
         <div>
+          <h4>
           <label>
-            <input type="checkbox" ref="check" onChange={this.change.bind(this)}/>
+            <input type="checkbox" ref="check" onChange={this.change}/>
             Show Completed Todos
           </label>
+        </h4>
         </div>
       </div>
     );

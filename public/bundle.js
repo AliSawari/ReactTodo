@@ -9626,7 +9626,7 @@ var TodoApp = function (_Component) {
     key: 'seacrh',
     value: function seacrh(searchText, check) {
       this.setState({
-        searchText: searchText,
+        searchText: searchText.toLowerCase(),
         showCompl: check
       });
     }
@@ -9656,13 +9656,17 @@ var TodoApp = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var todos = this.state.todos;
+      var _state = this.state,
+          todos = _state.todos,
+          showCompl = _state.showCompl,
+          searchText = _state.searchText;
 
+      var filter = _TodoStorage2.default.filter(todos, showCompl, searchText);
       return _react2.default.createElement(
         'div',
         { className: 'container jumbotron', style: this.mainStyle() },
         _react2.default.createElement(_TodoSearch2.default, { seacrh: this.seacrh }),
-        _react2.default.createElement(_TodoList2.default, { todos: todos, toggle: this.toggle }),
+        _react2.default.createElement(_TodoList2.default, { todos: filter, toggle: this.toggle }),
         _react2.default.createElement(_AddTodo2.default, { add: this.AddTodo })
       );
     }
@@ -9856,14 +9860,13 @@ var Todo = function (_Component) {
         return {
           backgroundColor: '#dbbe40',
           cursor: 'pointer',
-          borderRadius: '15px',
-          transition: '0.3s'
+          borderRadius: '15px'
         };
-      } else if (click === 1) {
+      }if (click === 1) {
         return {
           border: '2px solid #49eb54',
-          backgroundColor: '#b3b3b3',
-          color: '#5d5d5d',
+          backgroundColor: '#cdcdcd',
+          color: '#a0a0a0',
           textDecoration: 'line-through',
           borderRadius: '15px',
           cursor: 'pointer'
@@ -9872,10 +9875,18 @@ var Todo = function (_Component) {
         return {
           backgroundColor: '#e3cf78',
           cursor: 'pointer',
-          borderRadius: '15px',
-          transition: '0.3s'
+          borderRadius: '15px'
         };
       }
+    }
+  }, {
+    key: 'buttonStyle',
+    value: function buttonStyle() {
+      return {
+        border: 'none',
+        display: 'block',
+        margin: '0 0 0 85%'
+      };
     }
   }, {
     key: 'render',
@@ -9886,16 +9897,25 @@ var Todo = function (_Component) {
           done = _props2.done;
 
       return _react2.default.createElement(
-        'h4',
-        { onMouseEnter: this.hoverIn, onMouseLeave: this.hoverOut, onClick: this.toggle,
-          className: 'well text-center',
-          style: this.mainStyle() },
-        _react2.default.createElement('input', { type: 'checkbox', checked: done, onChange: function onChange() {
-            return 0;
-          } }),
-        id,
-        '. ',
-        text
+        'div',
+        null,
+        _react2.default.createElement(
+          'h3',
+          { onMouseEnter: this.hoverIn, onMouseLeave: this.hoverOut, onClick: this.toggle,
+            className: 'well text-center', style: this.mainStyle() },
+          _react2.default.createElement('input', { type: 'checkbox', checked: done, onChange: function onChange() {
+              return 0;
+            } }),
+          id,
+          '. ',
+          text,
+          _react2.default.createElement(
+            'button',
+            { className: 'btn-sm btn-danger',
+              style: this.buttonStyle() },
+            'Delete'
+          )
+        )
       );
     }
   }]);
@@ -9950,7 +9970,8 @@ var TodoList = function (_Component) {
     value: function renderTodo() {
       var _props = this.props,
           todos = _props.todos,
-          toggle = _props.toggle;
+          toggle = _props.toggle,
+          del = _props.del;
 
       return todos.map(function (todo) {
         return _react2.default.createElement(_Todo2.default, _extends({ key: todo.id }, todo, { toggle: toggle }));
@@ -10003,7 +10024,10 @@ var TodoSearch = function (_Component) {
   function TodoSearch(props) {
     _classCallCheck(this, TodoSearch);
 
-    return _possibleConstructorReturn(this, (TodoSearch.__proto__ || Object.getPrototypeOf(TodoSearch)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (TodoSearch.__proto__ || Object.getPrototypeOf(TodoSearch)).call(this, props));
+
+    _this.change = _this.change.bind(_this);
+    return _this;
   }
 
   _createClass(TodoSearch, [{
@@ -10028,16 +10052,20 @@ var TodoSearch = function (_Component) {
           "div",
           null,
           _react2.default.createElement("input", { type: "search", ref: "searchText", className: "form-control center-block",
-            placeholder: "Search Todos", onChange: this.change.bind(this) })
+            placeholder: "Search Todos", onChange: this.change })
         ),
         _react2.default.createElement(
           "div",
           null,
           _react2.default.createElement(
-            "label",
+            "h4",
             null,
-            _react2.default.createElement("input", { type: "checkbox", ref: "check", onChange: this.change.bind(this) }),
-            "Show Completed Todos"
+            _react2.default.createElement(
+              "label",
+              null,
+              _react2.default.createElement("input", { type: "checkbox", ref: "check", onChange: this.change }),
+              "Show Completed Todos"
+            )
           )
         )
       );
@@ -10057,26 +10085,46 @@ exports.default = TodoSearch;
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 var $ = __webpack_require__(102);
 exports.default = {
-    save: function save(todos) {
-        if ($.isArray(todos)) {
-            localStorage.setItem('todos', JSON.stringify(todos));
-            return todos;
-        }
-    },
-    get: function get() {
-        var result = localStorage.getItem('todos');
-        var todos = [];
-        try {
-            todos = JSON.parse(result);
-        } catch (e) {
-            console.log(e);
-        }
-        return $.isArray(todos) ? todos : [];
+  save: function save(todos) {
+    if ($.isArray(todos)) {
+      localStorage.setItem('todos', JSON.stringify(todos));
+      return todos;
     }
+  },
+  get: function get() {
+    var result = localStorage.getItem('todos');
+    var todos = [];
+    try {
+      todos = JSON.parse(result);
+    } catch (e) {
+      console.log(e);
+    }
+    return $.isArray(todos) ? todos : [];
+  },
+  filter: function filter(todos, showCompl, searchText) {
+    var filter = todos;
+    filter = filter.filter(function (todo) {
+      return !todo.done || showCompl;
+    });
+    filter = filter.filter(function (todo) {
+      var text = todo.text.toLowerCase();
+      return searchText.length === 0 || text.indexOf(searchText) > -1;
+    });
+    filter.sort(function (a, b) {
+      if (!a.done && b.done) {
+        return -1;
+      } else if (a.done && !b.done) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    return filter;
+  }
 };
 
 /***/ }),

@@ -51,38 +51,48 @@ class Todo extends Component {
       return {
         backgroundColor:'#dbbe40',
         cursor:'pointer',
-        borderRadius: '15px',
-        transition:'0.3s'
+        borderRadius: '15px'
       }
-    } else if (click === 1) {
+    } if(click === 1){
       return {
         border:'2px solid #49eb54',
-        backgroundColor:'#b3b3b3',
-        color:'#5d5d5d',
+        backgroundColor:'#cdcdcd',
+        color:'#a0a0a0',
         textDecoration: 'line-through',
         borderRadius: '15px',
-        cursor:'pointer'
+        cursor:'pointer',
       }
     } else {
     return {
       backgroundColor:'#e3cf78',
       cursor:'pointer',
-      borderRadius: '15px',
-      transition:'0.3s'
+      borderRadius: '15px'
     }
   }
   }
 
+  buttonStyle(){
+    return {
+      border:'none',
+      display:'block',
+      margin:'0 0 0 85%',
+    }
+  }
+
+
   render(){
     var {text,id,done} = this.props;
     return (
-      <h4 onMouseEnter={this.hoverIn} onMouseLeave={this.hoverOut} onClick={this.toggle}
-        className="well text-center"
-        style={this.mainStyle()}>
-
+      <div>
+      <h3 onMouseEnter={this.hoverIn} onMouseLeave={this.hoverOut} onClick={this.toggle}
+        className="well text-center" style={this.mainStyle()}>
         <input type="checkbox" checked={done} onChange={()=>{return 0;}}/>
       {id}. {text}
-    </h4>
+      <button className="btn-sm btn-danger"
+        style={this.buttonStyle()}>Delete</button>
+    </h3>
+  </div>
+
     );
   }
 }
