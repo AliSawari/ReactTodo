@@ -1,12 +1,12 @@
 
-export default class TodoStorage {
-      static save(todos){
+export default class  TodoStorage {
+      static  save(todos){
           if(Array.isArray(todos)) {
               localStorage.setItem('todos',JSON.stringify(todos));
               return todos;
           }
       }
-      static getTodos(){
+      static  getTodos(){
           var result = localStorage.getItem('todos');
           var todos = [];
           try {
@@ -16,7 +16,7 @@ export default class TodoStorage {
           }
           return Array.isArray(todos) ? todos : [];
       }
-      static filter(todos,showCompl,searchText){
+      static  filter(todos,showCompl,searchText){
           var filter = todos;
           filter = filter.filter((todo)=>{
             return !todo.done || showCompl;
