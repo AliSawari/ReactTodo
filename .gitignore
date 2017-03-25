@@ -1,3 +1,4 @@
 node_modules
 trigger.html
 .vscode/
+/public/bundle.js
