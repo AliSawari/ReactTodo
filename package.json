@@ -1,9 +1,10 @@
 {
-  "name": "liuo",
-  "version": "1.0.0",
-  "description": "a simple mongo data app",
+  "name": "react-todo",
+  "version": "1.1.0",
+  "description": "manage your todos with React Todo app",
   "main": "server.js",
   "scripts": {
+    "build": "webpack -p",
     "start": "node server.js"
   },
   "author": "Ali Sawari",
@@ -15,17 +16,8 @@
     "babel-preset-react": "^6.23.0",
     "body-parser": "^1.16.1",
     "express": "latest",
-    "mongoose": "^4.8.5",
-    "nodemon": "latest",
-    "passport": "^0.3.2",
     "react": "latest",
     "react-dom": "latest",
-    "react-router": "^3.0.2",
-    "redux": "latest",
-    "socket.io": "^1.7.3",
     "webpack": "^2.2.1"
-  },
-  "devDependencies": {
-    "compression-webpack-plugin": "^0.3.2"
   }
 }
