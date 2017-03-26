@@ -3,11 +3,13 @@ import TodoList from './TodoList';
 import AddTodo from './AddTodo';
 import TodoSearch from './TodoSearch';
 import TodoStorage from './TodoStorage';
+
+
 class TodoApp extends Component {
   constructor(props){
     super(props);
     this.state = {
-      todos: TodoStorage.get(),
+      todos: TodoStorage.getTodos(),
       showCompl:false,
       searchText:''
     }
