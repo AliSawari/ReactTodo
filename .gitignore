@@ -1,8 +1,4 @@
-
-node_modules
-# my practise file
+node_modules/
 trigger.html
-# visual studio code dir
 .vscode/
-#the bundle file of webpack
 public/bundle.js
