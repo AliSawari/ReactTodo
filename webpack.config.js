@@ -1,29 +1,8 @@
-// module.exports = {
-//   entry: "./jsx/App.jsx",
-//   output: {
-//     path: __dirname,
-//     filename: "./public/bundle.js"
-//   },
-//   resolve: {
-//     extensions:[".js",".jsx"]
-//   },
-//   module: {
-//     loaders: [
-//       {
-//         use : "babel-loader",
-//         test: /\.jsx?$/,
-//         exclude: /(node_modules)/
-//       }
-//     ]
-//   }
-// }
-
-
 module.exports = {
-  entry: './src/Main.js',
+  entry: './src/App.js',
   output: {
     path: __dirname,
-    filename: "./public/bundle.js"
+    filename: "./public/js/bundle.js"
   },
   resolve: {
     extensions:[".js",".jsx"]
