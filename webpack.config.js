@@ -1,6 +1,26 @@
-const webpack = require('webpack');
+// module.exports = {
+//   entry: "./jsx/App.jsx",
+//   output: {
+//     path: __dirname,
+//     filename: "./public/bundle.js"
+//   },
+//   resolve: {
+//     extensions:[".js",".jsx"]
+//   },
+//   module: {
+//     loaders: [
+//       {
+//         use : "babel-loader",
+//         test: /\.jsx?$/,
+//         exclude: /(node_modules)/
+//       }
+//     ]
+//   }
+// }
+
+
 module.exports = {
-  entry: "./jsx/App.jsx",
+  entry: './src/Main.js',
   output: {
     path: __dirname,
     filename: "./public/bundle.js"
@@ -9,11 +29,10 @@ module.exports = {
     extensions:[".js",".jsx"]
   },
   module: {
-    loaders: [
+    rules: [
       {
-        use : "babel-loader",
-        test: /\.jsx?$/,
-        exclude: /(node_modules)/
+       exclude: /(node_modules)/,
+       use: ['babel-loader']
       }
     ]
   }
