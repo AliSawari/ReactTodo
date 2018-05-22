@@ -1,14 +1,14 @@
-# ReactTodo
-### React Todo App
+# ReactTodo [![dependencies Status](https://david-dm.org/AliSawari/ReactTodo/status.svg)](https://david-dm.org/AliSawari/ReactTodo)
+**React Todo App :notebook: :electron:**
 
 Another simple Example of React BoilerPlates for the purpose of practising.
 Im still improving it... :)
 
-## Build and Start
+# Install
+`yarn` or `npm i`
 
-```
-npm run build
-npm start
-```
+## Run
+`npm start`
+
 - will build a minified build file
 - will start the app on [localhost:3000](http://localhost:3000)

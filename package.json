@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "dev": "webpack -w --mode=development",
-    "prop": "webpack --mode=production",
-    "start": "node ."
+    "pro": "webpack --mode=production",
+    "start": "npm run pro && node ."
   },
   "author": "Ali Sawari",
   "license": "ISC",
